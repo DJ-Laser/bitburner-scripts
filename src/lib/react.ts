@@ -6,5 +6,6 @@ const ReactDOM = window.ReactDOM as typeof ReactDomNamespace;
 
 export default React;
 export {
+  React,
   ReactDOM
 }
