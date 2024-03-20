@@ -1,8 +1,8 @@
 import { NS } from "@ns";
-import { KeyOfType } from "/lib/types";
+import { KeyOfType, validateArgs } from "/lib/types";
 
 export function main(ns: NS) {
-  gainRoot({ ns: ns, server: ns.args[0].toString() });
+  gainRoot(ns, validateArgs(ns.args, ["string"] as const)[0]);
 }
 
 const portOpeners: KeyOfType<NS, (host: string) => void>[] = [
@@ -13,7 +13,7 @@ const portOpeners: KeyOfType<NS, (host: string) => void>[] = [
   "relaysmtp",
 ];
 
-export default function gainRoot({ ns, server }: { ns: NS; server: string }) {
+export default function gainRoot(ns: NS, server: string) {
   const portsNeeded = ns.getServerNumPortsRequired(server);
   let portsOpened = 0;
   // Run all port openers
@@ -35,6 +35,8 @@ export default function gainRoot({ ns, server }: { ns: NS; server: string }) {
   ns.nuke(server);
 }
 
+// Use these functions to avoid triggering the dynamic ram checker
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function satisfyRamChecker(ns: NS, server: string) {
   ns.brutessh(server);
   ns.ftpcrack(server);

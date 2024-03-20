@@ -3,5 +3,5 @@ import gainRoot from "./lib/microscripts/gainRoot";
 import crawl from "/lib/crawler";
 
 export async function main(ns: NS) {
-  await crawl(ns, gainRoot);
+  await crawl(ns, ({ server }) => gainRoot(ns, server));
 }

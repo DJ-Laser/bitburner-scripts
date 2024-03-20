@@ -1,0 +1,7 @@
+{
+  "minSecurity": 1,
+  "growthRate": 3000,
+  "hackTime": 17.138,
+  "growTime": 54.844,
+  "weakenTime": 68.555
+}

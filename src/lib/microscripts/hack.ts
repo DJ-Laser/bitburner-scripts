@@ -1,11 +1,12 @@
 import { NS } from "@ns";
-import { args } from "/lib/types";
+import { validateArgs } from "/lib/types";
 
-export function main(ns: NS) {
-  const target = args.toString(ns.args[0]);
-  if (target == undefined) {
-    throw TypeError("Target (script arg 0) must not be undefined!");
-  }
-  ns.sleep(args.toNumber(ns.args[1]) ?? 0);
-  ns.hack(target);
+export async function main(ns: NS) {
+  const [target, sleepTime] = validateArgs(
+    ns.args,
+    ["string", "number"] as const,
+    [undefined, 0]
+  );
+  await ns.sleep(sleepTime);
+  await ns.hack(target);
 }

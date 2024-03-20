@@ -1,13 +1,15 @@
 import { NS } from "@ns";
-import crawl from "../crawler";
+import MicroscriptStorage from "/lib/storage";
+import crawl from "/lib/crawler";
 
-export function main(ns: NS) {
-  const output = findAllServers(ns);
+export async function main(ns: NS) {
+  const output = await findAllServers(ns);
+  MicroscriptStorage.store("findServers", output);
 }
 
-export default function findAllServers(ns: NS) {
+export default async function findAllServers(ns: NS) {
   const servers: string[] = [];
-  crawl(ns, ({ server }) => {
+  await crawl(ns, ({ server }) => {
     servers.push(server);
   });
   return servers;

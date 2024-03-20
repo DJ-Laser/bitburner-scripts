@@ -14,8 +14,8 @@ export default async function crawl(ns: NS, func: crawlerFn, host = "home") {
 }
 
 async function _crawl(opts: crawlerLocationData, func: crawlerFn) {
-  await func(opts);
   const { ns, server, parent, depth } = opts;
+  func(opts);
   const connections = ns.scan(server);
   for (const newServer of connections) {
     if (newServer !== parent) {
