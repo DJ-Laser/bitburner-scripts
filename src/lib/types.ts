@@ -23,7 +23,7 @@ function areArgsSameType<S extends readonly ArgTypeof[]>(
   }
 
   for (const i in args) {
-    if (typeof args[i] == spec[i]) {
+    if (typeof args[i] !== spec[i]) {
       return false;
     }
   }
@@ -43,6 +43,8 @@ export function validateArgs<S extends readonly ArgTypeof[]>(
       const arg: Arg | undefined = args[i] ?? defaultArgs?.[i];
       out.push(arg);
     }
+  } else {
+    out.push(...args);
   }
 
   if (areArgsSameType(out, spec)) {
@@ -50,6 +52,8 @@ export function validateArgs<S extends readonly ArgTypeof[]>(
   }
 
   throw new TypeError(
-    `Args and spec do not match! Args: ${args}, Spec: ${spec}`
+    `Args and spec do not match! Args: ${args.map(
+      (arg) => typeof arg
+    )}, Spec: ${spec}`
   );
 }
